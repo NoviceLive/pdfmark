@@ -42,6 +42,13 @@ what is not good:
 
 feb 7, 2015
 
+1. for man pages, the aforementioned regexes will both fail on some pages. 
+   so, i came up with this ugly regex: (?<=\nNAME\n)[\/_a-zA-RT-Z](.+|.+\n)+(?=\n(SYNOPSIS|DESC|CONFIG|\.))
+
+2. minor changes. no use of str.lower() any more.
+
+mar 1, 2015
+
 Copyright (C) 2015  Gu Zhengxiong
 
 This program is free software: you can redistribute it and/or modify
@@ -141,7 +148,7 @@ def main():
         exit()
 
     try:
-        [writer.addBookmark(i[1].lower(), i[0] - 1) for i in bookmarks]
+        [writer.addBookmark(i[1], i[0] - 1) for i in bookmarks]
     except:
         print('add bookmark error: {}'.format(get_cur_error()))
         exit()
@@ -173,16 +180,19 @@ def parse_text(text, regex, debug):
     + return: if it should be bookmarked, return a list of the title and the page number. else return false
     + rtype: list or boolean
     """
+    if debug:
+            print('matching text\n{}'.format(text))
+            
     try:
         mat =  re.search(regex, text)
     except:
         print('regex error: {}'.format(get_cur_error()))
         return None
+    
     if mat:
-        if debug:
-            print('text\n{}'.format(text))
-            print('matched\n{}'.format(mat.group(0)))
+        print('matched\n{}'.format(mat.group(0)))
         return mat.group(0)
+    
     else:
         return False
         
