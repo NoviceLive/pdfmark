@@ -12,7 +12,7 @@ pdftotext from poppler used to extract text.
 
 example regexes:
 1. man pages
-(?<=\bNAME\n)(.+|.+\n)+(?=\n(SYNOPSIS|DESCRIPTION))
+(?<=\nNAME\n)[\/_a-zA-RT-Z](.+|.+\n)+(?=\n(SYNOPSIS|DESC|CONFIG|\.))
 
 the following ran into catastrophic backtracking
 when only the last part unmatch?
