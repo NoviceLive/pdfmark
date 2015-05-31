@@ -11,8 +11,7 @@ and never omit where you desire it to be added.
 ## Dependencies
 
 - PyPDF2, which can be installed via pip
-- pdftotext, which is available from poppler-utils
-
+- pdftotext, which is available from the package poppler-utils
 
 ## Examples
 
