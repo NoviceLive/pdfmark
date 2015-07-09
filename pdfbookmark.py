@@ -4,22 +4,9 @@
 """
 Bookmark Maker Of PDF Documents
 
-by Novice Live, http:/novicelive.org/ :)
+Copyright 2015 Gu Zhengxiong <rectigu@gmail.com>
 
-Copyright (C) 2015  Gu Zhengxiong
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+GPL
 """
 
 
@@ -37,8 +24,6 @@ def main():
 
     if not args.output:
         args.output = 'output.pdf'
-
-    # dev_null = open('/dev/null', 'w') # /dev/null :( sys.stdin :)
 
     # is redirecting to sys.stdin evil? this script does not use sys.stdin
     try:
@@ -106,24 +91,6 @@ def main():
 
 
 def parse_text(text, regex, debug):
-    """
-    parse text in order to recognize whether to add a bookmark here
-    this is only the parser for man pages.
-    in other scenarios, you have to write your own parser
-
-    + param str text: the text from a page to be determined
-    whether we should add a bookmark to it or not
-
-    + param str regex: the regex used to recognize a bookmark's title
-
-    + param boolean debug: if true, print the original matched string,
-    in order to improve debugging experience
-
-    + return: if it should be bookmarked, return a list of the title
-    and the page number. else return false
-
-    + rtype: list or boolean
-    """
     if debug:
             print('matching text\n{}'.format(text))
 
@@ -143,15 +110,6 @@ def parse_text(text, regex, debug):
 
 
 def extract_text(pdf_file, page_number):
-    """
-    extract text in the specified page of the specified document via pdftotext
-
-    + param str pdf_file: the document's name or path
-    + param int page_number: which page to extract
-
-    + return: the text extracted from that page
-    + rtype: str
-    """
     return subprocess.check_output(
         ['pdftotext',
          pdf_file,
