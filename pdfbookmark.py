@@ -2,12 +2,11 @@
 
 
 """
-PDF Bookmark Maker
-
 Copyright 2015 Gu Zhengxiong <rectigu@gmail.com>
-
-GPL
 """
+
+
+__version__ = 'pdfbookmark 0.1.0'
 
 
 import sys
@@ -15,7 +14,6 @@ sys.EXIT_SUCCESS = 0
 sys.EXIT_FAILURE = 1
 import argparse
 import logging
-logging.basic_config = logging.basicConfig
 import subprocess
 import re
 
@@ -30,7 +28,6 @@ def main(args):
         return sys.EXIT_FAILURE
 
     bookmarks = []
-
     for i in range(1, reader.numPages + 1):
         bookmark_title = parse_text(
             extract_text(args.pdf, i),
@@ -116,63 +113,43 @@ def extract_text(pdf_file, page_number):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='PDF Bookmark Maker'
-    )
+        description='PDF Bookmark Maker')
     parser.add_argument(
-        'pdf',
-        metavar='PDF',
-        help='the original PDF to add bookmarks upon'
-    )
+        'pdf', metavar='PDF',
+        help='the original PDF to add bookmarks upon')
     parser.add_argument(
-        '-r',
-        '--regex',
-        required=True,
+        '-r', '--regex', required=True,
         help='use this regular expression to find bookmarks')
     parser.add_argument(
-        '-o',
-        '--output',
-        default='output.pdf',
-        help='output PDF using this file name'
-    )
+        '-o', '--output', default='output.pdf',
+        help='output PDF using this file name')
     parser.add_argument(
-        '-l',
-        '--limit',
-        type=int,
-        default=3,
-        help='multiply recursion limit by this number'
-    )
+        '-l', '--limit', type=int, default=3,
+        help='multiply recursion limit by this number')
     parser.add_argument(
-        '-p',
-        '--parse',
-        action='store_true',
+        '-p', '--parse', action='store_true',
         help='only parse and print result, do not add')
     parser.add_argument(
-        '-v',
-        '--verbose',
-        action='count',
-        default=0,
-        help='turn on verbose mode, -vv for debugging mode'
-    )
+        '-v', '--verbose', action='count', default=0,
+        help='turn on verbose mode, -vv for debugging mode')
     parser.add_argument(
-        '-V',
-        '--version',
-        action='version',
-        version='PDF Bookmark Maker Version 0.1'
-    )
+        '-V', '--version', action='version',version=__version__)
 
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def start_main():
     args = parse_args()
 
-    logging.basic_config(
+    logging.basicConfig(
         format='%(levelname)-11s: %(message)s',
         level={
-            0: logging.WARNING,
-            1: logging.INFO,
-            2: logging.DEBUG
+            0: logging.WARNING, 1: logging.INFO, 2: logging.DEBUG
         }[args.verbose % 3]
     )
 
     sys.exit(main(args))
+
+
+if __name__ == '__main__':
+    start_main()
