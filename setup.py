@@ -5,10 +5,10 @@ setup(
     name='pdfmark',
     version='0.1.0',
     py_modules=['pdfbookmark'],
-    install_requires = ['PyPDF2'],
+    install_requires=['PyPDF2'],
 
     entry_points={
-        'console_scripts' : ['pdfbookmark=pdfbookmark:start_main']
+        'console_scripts' : ['pdfbookmark=pdfbookmark:main']
     },
 
     classifiers=[

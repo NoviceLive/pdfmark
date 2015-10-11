@@ -20,11 +20,21 @@ import re
 import PyPDF2
 
 
-def main(args):
+def main():
+    """
+    Start hacking.
+    """
+    args = parse_args()
+    logging.basicConfig(
+        format='%(levelname)-11s: %(message)s',
+        level={
+            0: logging.WARNING, 1: logging.INFO, 2: logging.DEBUG
+        }[args.verbose % 3]
+    )
     try:
         reader = PyPDF2.PdfFileReader(args.pdf)
-    except:
-        logging.exception('could not read: {}'.format(args.pdf))
+    except Exception:
+        logging.exception('could not read: %s', args.pdf)
         return sys.EXIT_FAILURE
 
     bookmarks = []
@@ -37,20 +47,15 @@ def main(args):
             bookmarks.append(
                 [i, bookmark_title.replace('\n', ' ').strip()]
             )
-        elif bookmark_title == None:
-            exit()
-
+        elif bookmark_title is None:
+            return sys.EXIT_FAILURE
     if args.parse or args.verbose:
         if bookmarks:
             logging.info('found the following bookmarks')
         for i in bookmarks:
             logging.info(i)
-
-    logging.info(
-        'parsing done. totally {} bookmarks'.format(
-        len(bookmarks)
-        )
-    )
+    logging.info('parsing done. totally %s bookmarks',
+                 len(bookmarks))
 
     if args.parse or args.verbose == 2:
         logging.warning('debugging or parsing mode, exiting...')
@@ -60,58 +65,61 @@ def main(args):
     try:
         for i in range(reader.numPages):
             writer.addPage(reader.getPage(i))
-    except:
+    except Exception:
         logging.exception('could not add page')
         return sys.EXIT_FAILURE
-
     try:
         for i in bookmarks:
             writer.addBookmark(i[1], i[0] - 1)
-    except:
+    except Exception:
         logging.exception('could not add bookmark')
         return sys.EXIT_FAILURE
-
     sys.setrecursionlimit(args.limit * sys.getrecursionlimit())
-
     try:
         with open(args.output, 'wb') as output:
             writer.write(output)
-    except:
-        logging.exception('could not write: {}'.format(args.output))
+    except Exception:
+        logging.exception('could not write: %s', args.output)
         return sys.EXIT_FAILURE
 
     logging.info('adding completed. happy reading. :)')
 
 
 def parse_text(text, regex):
-    logging.debug('matching text\n{}'.format(text))
+    """
+    Parse the text against the given regular expression.
+    """
+    logging.debug('matching text\n%s', text)
     try:
-        mat =  re.search(regex, text)
-    except:
+        mat = re.search(regex, text)
+    except Exception:
         logging.exception('regex error')
         return None
     if mat:
-        logging.info('matched\n{}'.format(mat.group(0)))
+        logging.info('matched\n%s', mat.group(0))
         return mat.group(0)
     else:
         return False
 
 
 def extract_text(pdf_file, page_number):
+    """
+    Extract the text from the PDF file.
+    """
     return subprocess.check_output(
         [
-            'pdftotext',
-            pdf_file,
-            '-f',
-            str(page_number),
-            '-l',
-            str(page_number),
+            'pdftotext', pdf_file,
+            '-f', str(page_number),
+            '-l', str(page_number),
             '-'
         ]
     ).decode('utf-8')
 
 
 def parse_args():
+    """
+    Parse th arguments.
+    """
     parser = argparse.ArgumentParser(
         description='PDF Bookmark Maker')
     parser.add_argument(
@@ -133,23 +141,9 @@ def parse_args():
         '-v', '--verbose', action='count', default=0,
         help='turn on verbose mode, -vv for debugging mode')
     parser.add_argument(
-        '-V', '--version', action='version',version=__version__)
-
+        '-V', '--version', action='version', version=__version__)
     return parser.parse_args()
 
 
-def start_main():
-    args = parse_args()
-
-    logging.basicConfig(
-        format='%(levelname)-11s: %(message)s',
-        level={
-            0: logging.WARNING, 1: logging.INFO, 2: logging.DEBUG
-        }[args.verbose % 3]
-    )
-
-    sys.exit(main(args))
-
-
 if __name__ == '__main__':
-    start_main()
+    sys.exit(main())
