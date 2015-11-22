@@ -1,4 +1,4 @@
-# pdfbookmark
+# pdfmark - One Of My Most Initial Python Projects
 
 PDF Bookmark Adder
 
