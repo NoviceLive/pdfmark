@@ -24,8 +24,11 @@ Installation
 Dependencies
 ------------
 
-- PyPDF2, which can be installed via pip
-- pdftotext, which is available from the package ``poppler-utils``
+- ``PyPDF2``, which can be installed via pip
+- ``pdftotext``, which is available from the packages listed below
+
+  - Fedora, ``poppler-utils``
+  - Arch, ``poppler``
 
 
 Usage

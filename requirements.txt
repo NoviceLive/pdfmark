@@ -1,0 +1,2 @@
+pycliprog>=0.2.0
+pypdf2
