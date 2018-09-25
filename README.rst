@@ -9,6 +9,14 @@ pdfmark - One Of My Most Initial Python Projects
 PDF Bookmark Adder
 
 
+Official Mirrors
+----------------
+
+- https://gitlab.com/imtheforce/pdfmark
+- https://bitbucket.org/fourthorigin/pdfmark
+- https://github.com/NoviceLive/pdfmark
+
+
 Features
 --------
 
