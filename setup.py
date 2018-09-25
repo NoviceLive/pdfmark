@@ -1,5 +1,20 @@
 """
-Copyright 2015-2017 Gu Zhengxiong <rectigu@gmail.com>
+Copyright 2015-2018 Gu Zhengxiong <rectigu@gmail.com>
+
+This file is part of pdfmark.
+
+pdfmark is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+pdfmark is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with pdfmark.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
@@ -35,7 +50,7 @@ setup(
     author_email='rectigu@gmail.com',
     version=__version__,
     description='PDF Bookmark Adder',
-    license='GPL',
+    license='GPL-3',
     keywords='PDF Documents, Automatically Add Bookmarks, Regex',
     url='https://gitlab.com/imtheforce/{}'.format(PACKAGE_NAME),
     packages=find_packages(),
