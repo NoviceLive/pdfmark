@@ -2,3 +2,6 @@
 build
 dist
 *.pyc
+
+
+githooks/pre-commit

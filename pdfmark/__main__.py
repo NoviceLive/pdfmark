@@ -26,7 +26,7 @@ import sys
 import re
 import subprocess
 
-from pycliprog import Prog, ExitFailure
+from pycliprog.argparse import Prog, ExitFailure
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
