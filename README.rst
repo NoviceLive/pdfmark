@@ -57,4 +57,4 @@ Support heirarchical bookmarks.
 License
 -------
 
-See ``COPYING.txt``.
+See ``LICENSE.txt``.
