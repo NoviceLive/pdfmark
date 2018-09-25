@@ -1,6 +1,11 @@
 pdfmark - One Of My Most Initial Python Projects
 ================================================
 
+
+.. image:: https://img.shields.io/pypi/v/pdfmark.svg
+   :target: https://pypi.python.org/pypi/pdfmark
+
+
 PDF Bookmark Adder
 
 
@@ -40,7 +45,7 @@ Also see this real world case,
 man2pdf, https://github.com/NoviceLive/man2pdf,
 for which this quick and dirty script was written.
 
-And ``./pdfbookmark --help``.
+And ``./pdfmark --help``.
 
 
 TODO
