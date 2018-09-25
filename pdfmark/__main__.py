@@ -39,30 +39,22 @@ def main():
 
 class PdfMarkProg(Prog):
     def main(self):
+        logger.debug('using regex: %s', self.args.regex)
         try:
             reader = PdfFileReader(self.args.pdf)
         except Exception:
             raise ExitFailure('could not read: %s', self.args.pdf)
 
         bookmarks = []
-        for i in range(1, reader.numPages + 1):
-            bookmark_title = parse_text(
-                extract_text(self.args.pdf, i),
-                self.args.regex
-            )
+        for i in range(1, reader.numPages+1):
+            bookmark_title = parse_text(extract_text(self.args.pdf, i), self.args.regex)
             if bookmark_title:
-                bookmarks.append(
-                    [i, bookmark_title.replace('\n', ' ').strip()]
-                )
+                bookmark_title = bookmark_title.replace('\n', ' ').strip()
+                logger.info('found title at: %s %s', i, bookmark_title)
+                bookmarks.append([i, bookmark_title])
             elif bookmark_title is None:
                 raise ExitFailure('bookmark_title is None')
-        if self.args.parse or self.args.verbose:
-            if bookmarks:
-                logger.info('found the following bookmarks')
-            for i in bookmarks:
-                logger.info(i)
-        logger.info('parsing done. totally %s bookmarks',
-                     len(bookmarks))
+        logger.info('parsing done. totally %s bookmarks', len(bookmarks))
 
         if self.args.parse:
             logger.warning('debugging or parsing mode, exiting...')
@@ -121,14 +113,18 @@ def extract_text(pdf_file, page_number):
     """
     Extract the text from the PDF file.
     """
-    return subprocess.check_output(
-        [
-            'pdftotext', pdf_file,
-            '-f', str(page_number),
-            '-l', str(page_number),
-            '-'
-        ]
-    ).decode('utf-8')
+    # pdftotext
+    # -layout              : maintain original physical layout
+    # -raw                 : keep strings in content stream order
+    args = [
+        'pdftotext', pdf_file,
+        '-raw',
+        '-f', str(page_number),
+        '-l', str(page_number),
+        '-'
+    ]
+    logger.debug('pdftotext args: %s', args)
+    return subprocess.check_output(args).decode('utf-8')
 
 
 def parse_text(text, regex):
@@ -142,7 +138,7 @@ def parse_text(text, regex):
         logger.exception('regex error')
         return None
     if mat:
-        logger.info('matched\n%s', mat.group(0))
+        logger.debug('matched\n%s', mat.group(0))
         return mat.group(0)
     else:
         return False
