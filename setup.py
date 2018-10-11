@@ -43,6 +43,9 @@ try:
 except OSError:
     _requirements = []
 
+with open(join(_my_dir, 'README.rst')) as stream:
+    long_description = stream.read()
+
 
 setup(
     name=PROGRAM_NAME,
@@ -50,6 +53,8 @@ setup(
     author_email='rectigu@gmail.com',
     version=__version__,
     description='PDF Bookmark Adder',
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     license='GPL-3',
     keywords='PDF Documents, Automatically Add Bookmarks, Regex',
     url='https://gitlab.com/imtheforce/{}'.format(PACKAGE_NAME),
